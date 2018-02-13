@@ -1,0 +1,51 @@
+<div class="panel panel-default">   
+  <div class="panel-body">
+
+      <div class="col-sm-12">
+         
+        </div>
+    <section *ngIf="person">
+        <!-- description -->
+        <div class="col-sm-12 detailedReport" *ngFor="let item of person">
+            <a (click)="gotoList()">Restaurant List</a>
+                <h2>Detailed Report</h2>
+                <br>
+                <table>       
+                  <tr>
+                    <th>
+                      Name:
+                    </th>
+                    <td>{{item.dba_name}}</td>
+                  </tr>
+                  <tr class="resultsRow">
+                      <th>
+                        Result:
+                      </th>
+                      <td [ngClass]="{pass: item.results==='Pass'}">{{item.results}}</td>
+                    </tr>
+                    
+                  <tr>
+                      <th>
+                        License#:
+                      </th>
+                      <td>{{item.license}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                          Facility Type:
+                        </th>
+                        <td>{{item.facility_type}}</td>
+                      </tr>
+                </table>
+                <h3 *ngIf="item.violations?.length">Violations</h3>
+                  <p>{{item.violations | lowercase }}</p>
+               
+              
+        </div>
+      
+    </section>
+    <div class="col-sm-12">
+    <button class="btn btn-primary" (click)="gotoList()">Back to Results</button>
+    </div>
+  </div>
+</div>

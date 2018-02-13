@@ -1,0 +1,51 @@
+<div class="panel panel-default">   
+    <div class="panel-body">
+        <div className="search-bar">
+            <form class="form-horizontal" (keydown.enter)="$event.preventDefault();submitQuery()">
+                <div class="form-group">
+                  <div class="col-md-10">
+                      
+                        <input name="query" [(ngModel)]="queryVal"  (focus)="checkQuery()" type="text" placeholder="Search" class="form-control" autofocus/>
+                        <i class="fa fa-times-circle fa-lg" (click)="resetForm()"></i>
+                   
+                  </div>
+                  <div class="col-md-2">                 
+                      <button (click)="getData()" type="button" class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+            </form>
+          </div>
+          
+          <div class="col-sm-12">           
+                    <div *ngIf="isEmpty" class="bg-danger">Please enter a restaurant name.</div>
+                    <div *ngIf="isNoResults" class="bg-warning">There were no results returned.</div>
+          </div>
+          <div class="col-sm-12">          
+            <ul class="list-group" *ngFor="let place of places">
+              <li>
+                <a [routerLink]="['details/', place.id]" [queryParams]="{query: this.queryVal}">
+                  <div class="pull-left">
+                      <div class="no-img"></div>
+                  </div>
+                  <div class="pull-left">             
+                    <h3 >
+                        {{place.dba_name}} <span [ngClass]="{pass: place.results==='Pass'}">{{place.results}}</span>
+                    </h3>
+                    <p >
+                        {{ place.violations | truncate : 350 }}  
+                    </p>              
+                  </div>   
+                  </a>
+              </li>
+            </ul> 
+            <div *ngIf="isLoading && isSubmitted"><i class="center-fix main-spinner fa fa-spin fa-spinner"></i></div>
+            
+            <div *ngIf="showControls && isSubmitted" class="clearfix col-sm-12 page-control">
+                <button (click)="nextData()" type="button" class="btn btn-primary pull-right" [disabled]="currentPage > 1 && places.length < 5">Next <i class="fa fa-angle-right"></i></button>
+                <button (click)="prevData()" type="button" class="btn btn-primary pull-left"  [disabled]="currentPage === 1"><i class="fa fa-angle-left"></i> Previous</button>
+            </div> 
+            
+        </div>
+    
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="panel panel-default">   
+    <div class="panel-body">
+        <div className="search-bar">
+            <form class="form-horizontal" (keydown.enter)="$event.preventDefault();getData()">
+                <div class="form-group">
+                  <div class="col-md-10">
+                      
+                        <input name="query" [(ngModel)]="queryVal" type="text" placeholder="Search" class="form-control" autofocus/>
+                        <i class="fa fa-times-circle fa-lg" (click)="resetForm()"></i>
+                   
+                  </div>
+                  <div class="col-md-2">
+                   
+                      <button (click)="getData()" type="button" class="btn btn-primary">Search</button>
+                    
+                  </div>
+                </div>
+            </form>
+          </div>
+          
+          <div class="col-sm-12">           
+                    <div *ngIf="isEmpty" class="warn">Please enter a restaurant name.</div>
+                    <div *ngIf="isNoResults" class="warn">There were no results returned.</div>
+            <ul class="list-group" *ngFor="let person of people">
+              <li>
+                <a [routerLink]="['details/', person.id]" [queryParams]="{query: this.queryVal}">
+                  <div class="pull-left">
+                      <div class="no-img"></div>
+                  </div>
+                  <div class="pull-left">             
+                    <h3 >
+                        {{person.dba_name}} <span [ngClass]="{pass: person.results==='Pass'}">{{person.results}}</span>
+                    </h3>
+                    <p >
+                        {{ person.violations | truncate : 350 }}  
+                    </p>              
+                  </div>   
+                  </a>
+              </li>
+            </ul> 
+           
+            <div *ngIf="queryVal.length>0" class="clearfix col-sm-12 page-control">
+                <button (click)="nextData()" type="button" class="btn btn-primary pull-right" [disabled]="currentPage > 1 && people.length < 5">Next <i class="fa fa-angle-right"></i></button>
+                <button (click)="prevData()" type="button" class="btn btn-primary pull-left"  [disabled]="currentPage === 1"><i class="fa fa-angle-left"></i> Previous</button>
+            </div> 
+        </div>
+    
+    </div>
+</div>

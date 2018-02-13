@@ -1,0 +1,162 @@
+.panel-title {
+	font-weight: bold;
+	color: color(primary);
+}
+
+.navbar-inverse {
+	background: $navbar-background;
+	height: 56px;
+}
+
+as-home, app-details {
+	.panel-body {
+		background: $searchBackground;
+	}
+}
+
+form {
+	input.form-control {
+		border: 1px solid #999;
+	}
+	margin: 10px 20px;
+	button.btn-primary {
+	width: 100% ;
+	
+	}
+	.col-md-10 .form-group {
+		margin-bottom: 0;
+	}
+	i {
+		cursor: pointer;
+		position: absolute;
+		right: 20px;
+		top: 11px;
+		color: #ccc;
+	}	
+}
+
+.bg-danger, .bg-warning {
+	padding: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.btn-primary {
+	background-color: $button-background-color;
+	&:hover {
+		background-color: $button-background-color-hover
+	}
+}
+
+ul.list-group {
+	list-style-type: none;
+	margin-right: 10px;
+	li {
+		content: "";
+    	clear: both;
+		display: table;
+		width: 100%;
+		margin-left: 5px;
+		margin-right: 10px;
+		border: 1px solid $item-list-border-color;
+		background: $item-list-background-color;
+		> div {
+			width: auto;
+		}
+		> div:first-child {
+			width: 130px;
+		}
+
+		a {display: flex;
+		color: #000; text-decoration: none;}
+		h3 {
+			padding-right: 10px;
+			margin-top: 10px;
+			font-size: $item-heading-size;
+			color: $item-heading-color;
+			span {
+				color: $item-subheading-color;
+				font-size: $item-subheading-size;
+				&.pass {
+					color: $pass-inspection-color;
+				}
+			}
+		}
+		p {
+			padding-right: 20px;
+			text-transform: capitalize !important;
+		}
+		.no-img {
+			float: left;
+			width: 100px;
+			height: 100px;
+			border: 1px solid $item-list-border-color;
+			border-radius: 5px;
+			margin: 10px 10px;
+			background-color: $item-no-image-background;
+			color: gray;
+		}
+		&:hover {
+			border: 1px solid #999;
+		}
+	}
+}
+
+.page-control {
+	padding-left: 5px;
+	padding-right: 5px;
+	button {
+		min-width: 110px;
+	}
+	padding-bottom: 10px;
+}
+
+.detailedReport {
+	margin-bottom: 2em;
+	a {cursor: pointer}
+	table {
+		
+		tr {
+			th {
+				padding: 5px 5px 5px 0;
+				
+			}
+			td {
+				padding: 5px;
+				&.pass {
+					color: $pass-inspection-color;
+					font-weight: bold;
+				}
+			}
+			&.resultsRow {
+					
+				th, td {
+					border-top: 1px solid #ddd;
+					border-bottom: 1px solid #ddd;
+					padding: 15px 5px 15px 0;
+					
+				}
+				td {
+					padding: 15px 5px;
+				}
+			}
+		}
+		
+	}
+}
+
+
+@media (max-width: 991px) { 
+	form {
+		.col-md-10 {
+			padding-bottom: 1em;
+		}
+	}
+	ul.list-group {
+		li {	
+			h3 {
+				font-size: 16px;
+			}
+		}
+	}		
+ }
