@@ -9,8 +9,10 @@ Go to the starter directory and install the packages:
 ```bash
 npm install
 or for mac users you may have to use:
+
 npm sudo install
-```
+or 
+yarn install
 
 ## Start
 Let's start up the server, run:
