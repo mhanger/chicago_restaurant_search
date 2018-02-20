@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Place } from '../place';
-import { PlaceService } from "../place.service";
+import { PlaceService } from '../place.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common'; 
+import { Location } from '@angular/common';
 
 @Component({
     moduleId: module.id,
@@ -14,45 +14,48 @@ import { Location } from '@angular/common';
     ]
 })
 export class HomeComponent implements OnInit {
-    isNoResults: boolean = false;
-    currentPage: number = 0;
-    testCurrentPage : number;
-    isFirstLoad: boolean = true;
-    existingQueryVal: string = '';
-    isSubmitted: boolean = false;
-    isEmpty: boolean = false;
-    queryVal: string = '';
-    places: Place[] = []; 
-    errorMessage: string = '';
-    isLoading: boolean = true;
-    showControls: boolean = false;
+    isNoResults = false;
+    currentPage = 0;
+    testCurrentPage: number;
+    isFirstLoad = true;
+    existingQueryVal = '';
+    isSubmitted = false;
+    isEmpty = false;
+    queryVal = '';
+    places: Place[] = [];
+    errorMessage = '';
+    isLoading = true;
+    showControls = false;
 
   constructor(private placeService: PlaceService, private route: ActivatedRoute, private router: Router) { }
 
-    ngOnInit() {       
-        this.testCurrentPage = this.route.snapshot.params['currentPage'];
+    ngOnInit() {
+        this.testCurrentPage = this.route.snapshot.params.currentPage;
+        // console.log('currentPage: ' + this.testCurrentPage);
+
         this.route.queryParams
-            .subscribe(
-                (params: Params) => {
-                    this.existingQueryVal = params['query'];
-                } 
-            );
+        .subscribe(
+            (params: {query: string}) => {
+              this.existingQueryVal = params.query;
+              // console.log('query: ' + params.query);
+            }
+        );
+
     if (typeof this.testCurrentPage === 'string') {
-        //check if coming back to existing page from detail
+        // check if coming back to existing page from detail
         this.currentPage = Number(this.testCurrentPage);
-    }
-    else {
+    } else {
         this.currentPage = 1;
     }
 
-    if (this.existingQueryVal !==undefined) {
+    if (typeof this.existingQueryVal !== 'undefined') {
         this.queryVal = this.existingQueryVal;
-        this.getData(this.queryVal); 
-        } 
+        this.getData(this.queryVal);
+        }
     }
 
     resetForm() {
-        this.queryVal='';
+        this.queryVal = '';
         this.places = [];
         this.isEmpty = false;
         this.isSubmitted = false;
@@ -68,52 +71,50 @@ export class HomeComponent implements OnInit {
     }
 
     submitQuery() {
-        this.getData(this.queryVal);  
+        this.getData(this.queryVal);
     }
-    
-    checkQuery(e) {  
+
+    checkQuery(e) {
         this.resetForm();
     }
 
     nextData() {
         this.currentPage += 1;
-        this.getData(this.queryVal);  
+        this.getData(this.queryVal);
     }
 
     prevData() {
         this.currentPage -= 1;
-        this.getData(this.queryVal);   
+        this.getData(this.queryVal);
     }
 
     finishedLoading() {
         if (this.places.length < 1) {
             this.isNoResults = true;
-        }
-        else {
+        } else {
             setTimeout (() => {
                     this.showControls = true;
-                }, 500)
+                }, 500);
         }
-        this.isLoading = false;   
+        this.isLoading = false;
     }
 
-    getData(queryVal){     
+    getData(queryVal) {
         if (this.queryVal.length > 0) {
             this.isLoading = true;
             this.isSubmitted = true;
-            this.isEmpty = false; 
+            this.isEmpty = false;
             this.router.navigate(['pages', this.currentPage], { queryParams: { query: this.queryVal } });
             this.placeService
             .getAll(this.queryVal, this.currentPage)
-            .subscribe(
-            /* happy path */ p => this.places = p,
-            /* error path */ e => this.errorMessage = e,
-            /* onCompleted */ // () => this.isLoading = false   
-            () => {this.finishedLoading()}         
+                .subscribe(
+                /* happy path */ p => this.places = p,
+                /* error path */ e => this.errorMessage = e,
+                /* onCompleted */ // () => this.isLoading = false
+                () => { this.finishedLoading(); }
             );
-            
-            }
-            else {
+
+            } else {
                 this.isEmpty = true;
             }
         }

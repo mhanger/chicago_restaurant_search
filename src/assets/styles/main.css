@@ -5935,6 +5935,15 @@ ul.list-group {
   ul.list-group li h3 {
     font-size: 16px; } }
 
+@media (max-width: 320px) {
+  ul.list-group li a > div.pull-left {
+    padding-left: 10px; }
+  ul.list-group li .no-img {
+    display: none; }
+  as-home .panel-body, app-details .panel-body {
+    padding-left: 0;
+    padding-right: 0; } }
+
 .center-fix {
   position: fixed;
   top: 50%;
